@@ -30,8 +30,6 @@
 
 ;; For more information about hydras, see https://github.com/abo-abo/hydra
 
-;; To use
-
 ;; Hydras serve several important purposes: discovery, memorization, and
 ;; organization.
 
@@ -54,7 +52,7 @@
 
 ;;   - The process of creating hydras can aid in organizing code.  This
 ;;     gives both developers and users a better overview of what the
-;;     project is can or cannot do.
+;;     project can or cannot do.
 ;;
 ;;   - Thus, each hydra is like a section of a quick-reference card.  In
 ;;     fact, many of the hydras here are inspired by the CIDER refcard:
@@ -151,17 +149,19 @@ CIDER Debug and Test
 ---------------------------------------------------------------------------
 _x_: Eval defun at point
 _v_: Toggle var tracing                 _n_: Toggle ns tracing
-_,_: Run test                           _l_: Run loaded tests
-_r_: Rerun tests                        _s_: Show test report
+_t_: Run test                           _l_: Run loaded tests
+_p_: Run project tests                  _r_: Rerun tests
+_s_: Show test report
 "
   ;; Debugging
   ("x" (lambda () (interactive) (cider-eval-defun-at-point t)) nil)
   ("v" cider-toggle-trace-var nil)
   ("n" cider-toggle-trace-ns nil)
   ;; Testing
-  ("," cider-test-run-test nil)
+  ("t" cider-test-run-test nil)
   ("l" cider-test-run-loaded-tests nil)
   ("r" cider-test-rerun-tests nil)
+  ("p" cider-test-run-project-tests nil)
   ("s" cider-test-show-report nil))
 
 
@@ -193,32 +193,23 @@ _b_: Interrupt pending evaluations      _Q_: Quit CIDER
   ("Q" cider-quit nil))
 
 
-;;;; Turn hydras on and off
+;;;; Key bindings and minor mode
 
-(defvar cider-hydra-original-commands (make-hash-table)
-  "Hash table of original commands for key sequences
-in`cider-mode-map' that hydras override.")
-
-;;;###autoload
-(defun cider-hydra-on ()
-  "Turn CIDER hydras on."
-  (interactive)
-  ;; Store existing commands in `cider-mode-map' so they can be recovered
-  (dolist (key '("C-c C-d" "C-c C-t" "C-c M-t"))
-    (puthash key (lookup-key cider-mode-map (kbd key)) cider-hydra-original-commands))
-  ;; Set hydras
-  (define-key cider-mode-map (kbd "C-c C-d") #'cider-hydra-doc/body)
-  (define-key cider-mode-map (kbd "C-c C-t") #'cider-hydra-test/body)
-  (define-key cider-mode-map (kbd "C-c M-t") #'cider-hydra-test/body))
+(defvar cider-hydra-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map cider-mode-map)
+    (define-key map (kbd "C-c C-d") #'cider-hydra-doc/body)
+    (define-key map (kbd "C-c C-t") #'cider-hydra-test/body)
+    (define-key map (kbd "C-c M-t") #'cider-hydra-test/body)
+    (define-key map (kbd "C-c M-r") #'cider-hydra-repl/body)
+    map)
+  "Keymap for CIDER hydras.")
 
 ;;;###autoload
-(defun cider-hydra-off ()
-  "Turn CIDER hydras off."
-  (interactive)
-  (when cider-hydra-original-commands
-    (maphash (lambda (key val)
-	       (define-key cider-mode-map (kbd key) val))
-	     cider-hydra-original-commands)))
+(define-minor-mode cider-hydra-mode
+  "Hydras for CIDER."
+  :keymap cider-hydra-map
+  :require 'cider)
 
 
 (provide 'cider-hydra)
