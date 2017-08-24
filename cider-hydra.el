@@ -149,21 +149,22 @@ _m_: Macroexpand-1                      _M_: Macroexpand all
 CIDER Debug and Test
 ---------------------------------------------------------------------------
 _x_: Eval defun at point
-_v_: Toggle var tracing                 _n_: Toggle ns tracing
+_v_: Toggle var tracing                 _s_: Toggle ns tracing
 _t_: Run test                           _l_: Run loaded tests
-_p_: Run project tests                  _r_: Rerun tests
-_s_: Show test report
+_p_: Run project tests                  _n_: Run namespace tests
+_b_: Show test report                   _r_: Rerun tests
 "
   ;; Debugging
   ("x" (lambda () (interactive) (cider-eval-defun-at-point t)) nil)
   ("v" cider-toggle-trace-var nil)
-  ("n" cider-toggle-trace-ns nil)
+  ("s" cider-toggle-trace-ns nil)
   ;; Testing
   ("t" cider-test-run-test nil)
+  ("n" cider-test-run-ns-tests nil)
   ("l" cider-test-run-loaded-tests nil)
   ("r" cider-test-rerun-failed-tests nil)
   ("p" cider-test-run-project-tests nil)
-  ("s" cider-test-show-report nil))
+  ("b" cider-test-show-report nil))
 
 
 ;;;; REPL
