@@ -4,7 +4,7 @@
 
 ;; Author: Tianxiang Xiong <tianxiang.xiong@gmail.com>
 ;; Keywords: convenience, tools
-;; Package-Requires: ((cider "0.14.0") (hydra "0.13.0"))
+;; Package-Requires: ((cider "0.18.0") (hydra "0.13.0"))
 ;; URL: https://github.com/clojure-emacs/cider-hydra
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -64,7 +64,7 @@
 (require 'cider-client)
 (require 'cider-doc)
 (require 'cider-grimoire)
-(require 'cider-interaction)
+(require 'cider-eval)
 (require 'cider-macroexpansion)
 (require 'cider-mode)
 (require 'cider-repl)
