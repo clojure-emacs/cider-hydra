@@ -9,10 +9,10 @@ After setting up [MELPA](http://melpa.org/) as a repository, use `M-x package-in
 Add the following to your init file:
 
 ```emacs-lisp
-(cider-hydra-on)
+(add-hook 'clojure-mode-hook #'cider-hydra-mode)
 ```
 
-To turn hydras off, use the `cider-hydra-off` command, which will restore the previous CIDER commands.
+To turn hydras off, just disable the `cider-hydra-mode`, which will restore the previous CIDER commands.
 
 ## See Also
 
