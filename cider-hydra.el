@@ -143,28 +143,36 @@ _m_: Macroexpand-1                      _M_: Macroexpand all
   ("M" cider-macroexpand-all nil))
 
 
-;;;; Testing and debugging
+;;;; Testing
 
 (defhydra cider-hydra-test (:color blue)
   "
-CIDER Debug and Test
+CIDER Test
+---------------------------------------------------------------------------
+_t_: Run test                           _l_: Run loaded tests
+_p_: Run project tests                  _n_: Run namespace tests
+_r_: Rerun tests                        _s_: Show test report
+"
+  ("t" cider-test-run-test nil)
+  ("l" cider-test-run-loaded-tests nil)
+  ("p" cider-test-run-project-tests nil)
+  ("n" cider-test-run-ns-tests nil)
+  ("r" cider-test-rerun-failed-tests nil)
+  ("s" cider-test-show-report nil))
+
+
+;;;; Debugging
+
+(defhydra cider-hydra-debug (:color blue)
+  "
+CIDER Debug
 ---------------------------------------------------------------------------
 _x_: Eval defun at point
 _v_: Toggle var tracing                 _n_: Toggle ns tracing
-_t_: Run test                           _l_: Run loaded tests
-_p_: Run project tests                  _r_: Rerun tests
-_s_: Show test report
 "
-  ;; Debugging
   ("x" (lambda () (interactive) (cider-eval-defun-at-point t)) nil)
   ("v" cider-toggle-trace-var nil)
-  ("n" cider-toggle-trace-ns nil)
-  ;; Testing
-  ("t" cider-test-run-test nil)
-  ("l" cider-test-run-loaded-tests nil)
-  ("r" cider-test-rerun-failed-tests nil)
-  ("p" cider-test-run-project-tests nil)
-  ("s" cider-test-show-report nil))
+  ("n" cider-toggle-trace-ns nil))
 
 
 ;;;; REPL
@@ -202,7 +210,7 @@ _b_: Interrupt pending evaluations      _Q_: Quit CIDER
     (set-keymap-parent map cider-mode-map)
     (define-key map (kbd "C-c C-d") #'cider-hydra-doc/body)
     (define-key map (kbd "C-c C-t") #'cider-hydra-test/body)
-    (define-key map (kbd "C-c M-t") #'cider-hydra-test/body)
+    (define-key map (kbd "C-c M-t") #'cider-hydra-debug/body)
     (define-key map (kbd "C-c M-r") #'cider-hydra-repl/body)
     map)
   "Keymap for CIDER hydras.")
