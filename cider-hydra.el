@@ -202,7 +202,7 @@ _b_: Interrupt pending evaluations      _Q_: Quit CIDER
     (set-keymap-parent map cider-mode-map)
     (define-key map (kbd "C-c C-d") #'cider-hydra-doc/body)
     (define-key map (kbd "C-c C-t") #'cider-hydra-test/body)
-    (define-key map (kbd "C-c M-t") #'cider-hydra-test/body)
+    (define-key map (kbd "C-c M-t") #'cider-hydra-eval/body)
     (define-key map (kbd "C-c M-r") #'cider-hydra-repl/body)
     map)
   "Keymap for CIDER hydras.")
