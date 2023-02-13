@@ -31,7 +31,7 @@ organization.
 
   - Thus, each hydra is like a section of a quick-reference card.  In
     fact, many of the hydras here are inspired by the CIDER refcard:
-    https://github.com/clojure-emacs/cider/blob/master/doc/cider-refcard.pdf
+    https://github.com/clojure-emacs/cider/blob/master/refcard/cider-refcard.pdf
 
 ## Install
 
